@@ -6,17 +6,13 @@ defmodule Shorty.Application do
   use Application
 
   def start(_type, _args) do
+    Shorty.Config.load!()
+
     children = [
-      # Start the Ecto repository
       Shorty.Repo,
-      # Start the Telemetry supervisor
       ShortyWeb.Telemetry,
-      # Start the PubSub system
       {Phoenix.PubSub, name: Shorty.PubSub},
-      # Start the Endpoint (http/https)
       ShortyWeb.Endpoint
-      # Start a worker by calling: Shorty.Worker.start_link(arg)
-      # {Shorty.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

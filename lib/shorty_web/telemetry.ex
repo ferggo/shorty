@@ -1,4 +1,6 @@
 defmodule ShortyWeb.Telemetry do
+  @moduledoc "Used to populate the Phoenix LiveDashboard"
+
   use Supervisor
   import Telemetry.Metrics
 

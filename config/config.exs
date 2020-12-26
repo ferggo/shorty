@@ -12,13 +12,15 @@ config :shorty,
 
 # Configures the endpoint
 config :shorty, ShortyWeb.Endpoint,
-  url: [host: "localhost"],
-  secret_key_base: "/+Jh+SMBwDOomAYq8Tx/Yx/GR39lk5NqC908H8zlf7Aro2j4VajmfGc5J0fafVzn",
+  transport_options: [socket_opts: [:inet6]],
   render_errors: [view: ShortyWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Shorty.PubSub,
   live_view: [signing_salt: "5kfiY4sk"]
 
 # Configures Elixir's Logger
+config :logger,
+  level: :info
+
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

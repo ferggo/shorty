@@ -51,4 +51,17 @@ defmodule ShortyWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug ShortyWeb.Router
+
+  def init(_, config) do
+    runtime_opts = Shorty.Config.fetch(:endpoint)
+    %URI{scheme: scheme, host: host, port: port} = URI.parse(runtime_opts.url)
+
+    {:ok,
+     Keyword.merge(config,
+       http: [port: runtime_opts.listener_port],
+       url: [scheme: scheme, host: host, port: port],
+       check_origin: ["#{scheme}://#{host}:#{port}"],
+       secret_key_base: runtime_opts.secret_key_base
+     )}
+  end
 end

@@ -1,13 +1,7 @@
 use Mix.Config
 
 # Configure your database
-config :shorty, Shorty.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "shorty_dev",
-  hostname: "localhost",
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+config :shorty, Shorty.Repo, show_sensitive_data_on_connection_error: true
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -16,10 +10,8 @@ config :shorty, Shorty.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :shorty, ShortyWeb.Endpoint,
-  http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false,
   watchers: [
     node: [
       "node_modules/webpack/bin/webpack.js",

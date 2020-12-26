@@ -1,4 +1,6 @@
 defmodule ShortyWeb.PageLive do
+  @moduledoc false
+
   use ShortyWeb, :live_view
 
   @impl true
