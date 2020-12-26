@@ -46,25 +46,36 @@ defmodule Shorty.Config do
   # These validators should really be private, but they're public so they can be unit-tested.
   @doc false
   def validate_endpoint_url(url) do
-    %URI{scheme: scheme, host: host, port: port} = URI.parse(url)
+    %URI{scheme: scheme, host: host} = URI.parse(url)
 
-    unless is_binary(scheme) && String.starts_with?(scheme, "http") do
-      raise "ENDPOINT_URL must specify a scheme of http or https"
+    cond do
+      scheme != "http" && scheme != "https" ->
+        raise "ENDPOINT_URL must specify a scheme of http or https"
+
+      !is_binary(host) || String.length(host) == 0 ->
+        raise "ENDPOINT_URL must specify a host"
+
+      true ->
+        url
     end
-
-    unless host && port, do: raise("ENDPOINT_URL must specify a host and port")
-
-    url
   end
 
   @doc false
   def validate_db_url(url) do
     %URI{scheme: scheme, host: host, path: path} = URI.parse(url)
 
-    unless scheme == "postgresql", do: raise("DATABASE_URL scheme must be postgresql")
-    unless host, do: raise("DATABASE_URL must specify a host")
-    unless path, do: raise("DATABASE_URL must specify a database")
+    cond do
+      scheme != "postgresql" ->
+        raise "DATABASE_URL scheme must be postgresql"
 
-    url
+      !is_binary(host) || String.length(host) == 0 ->
+        raise "DATABASE_URL must specify a host"
+
+      !is_binary(path) || String.length(path) <= 1 ->
+        raise "DATABASE_URL must specify a database"
+
+      true ->
+        url
+    end
   end
 end
