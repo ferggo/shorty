@@ -17,7 +17,7 @@ defmodule ShortyWeb.Router do
   scope "/", ShortyWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", ShortenerLive, :index
   end
 
   # Other scopes may use custom stacks.

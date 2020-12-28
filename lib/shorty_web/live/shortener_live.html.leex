@@ -1,0 +1,9 @@
+<main role="main">
+  <form phx-change="validate" phx-submit="shorten" class="bg-white flex relative mt-4 shadow-lg rounded-lg">
+    <input type="text" name="url" class="w-full p-6 font-mono text-purple-900 placeholder-purple-600 font-bold rounded-lg" placeholder="Paste your long link here" value="<%= @url %>">
+    <button type="submit" class="m-2 p-4 bg-purple-700 hover:bg-purple-600 text-white rounded-lg">
+      <p class="font-bold text-md">Shorten</p>
+    </button>
+    <p class="text-red-600 text-semibold absolute bottom-0 left-8"><%= @validation_message %></p>
+  </form>
+</main>
