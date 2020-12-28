@@ -5,26 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
-    <%= live_title_tag assigns[:page_title] || "Shorty", suffix: " · Phoenix Framework" %>
+    <%= live_title_tag assigns[:page_title] || "Shorty" %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
-  <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
-    </header>
-    <%= @inner_content %>
+  <body class="h-screen overflow-hidden bg-purple-200">
+    <div class="flex h-full items-center justify-center">
+      <div class="my-auto">
+        <header class="bg-purple-500 text-white rounded-lg p-4">
+          <h1 class="font-serif font-black text-7xl text-purple-200">Shorty</h1>
+          <h2 class="font-sans italic font-semibold text-xl text-purple-300">Probably the most basic link-shortener ever</h2>
+        </header>
+        <%= @inner_content %>
+      </div>
+    </div>
+    <br/>
   </body>
 </html>
