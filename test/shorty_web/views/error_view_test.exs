@@ -5,7 +5,7 @@ defmodule ShortyWeb.ErrorViewTest do
   import Phoenix.View
 
   test "renders 404.html" do
-    assert render_to_string(ShortyWeb.ErrorView, "404.html", []) == "Not Found"
+    assert render_to_string(ShortyWeb.ErrorView, "404.html", []) =~ "This shorty doesn't exist"
   end
 
   test "renders 500.html" do
