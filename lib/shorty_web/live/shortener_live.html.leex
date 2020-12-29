@@ -6,4 +6,17 @@
     </button>
     <p class="text-red-600 text-semibold absolute bottom-0 left-8"><%= @validation_message %></p>
   </form>
+  <%= for %{shorty: shorty, url: url} <- @history do %>
+    <section class="bg-white mt-4 p-4 shadow-lg rounded-lg overflow-hidden">
+      <div class="text-xl font-black text-gray-900">
+        <span>Shorty:</span>
+        <a href="<%= shorty %>" class="text-purple-800"><%= shorty %></a>
+      </div>
+      <div class="text-sm pt-4 text-gray-400">
+        <span>Long URL:</span>
+        <br/>
+        <a href="<%= url %>"><%= url %></a>
+      </div>
+    </section>
+  <% end %>
 </main>

@@ -15,6 +15,7 @@ defmodule ShortyWeb.ShortenerLive do
     socket =
       socket
       |> assign(url: "")
+      |> assign(history: [])
       |> assign_validation_message("")
 
     {:ok, socket}
@@ -27,15 +28,26 @@ defmodule ShortyWeb.ShortenerLive do
 
   @impl true
   def handle_event("shorten", %{"url" => url}, socket) do
-    case validation = URLValidator.validate(url) do
-      {:ok, normalized_url} ->
-        Logger.info("Shortened url: #{normalized_url}")
-
-      {:error, reason} ->
+    with {:ok, normalized_url} <- URLValidator.validate(url),
+         {:ok, link} <- Shorty.create_link(normalized_url) do
+      Logger.info("Shortened slug: #{link.slug} to url: #{link.url}")
+      {:noreply, assign_success(socket, link)}
+    else
+      {:error, reason} = validation ->
         Logger.info("Failed to shorten url: #{url} reason: #{reason}")
+        {:noreply, assign_validation_message(socket, validation)}
     end
+  end
 
-    {:noreply, assign_validation_message(socket, validation)}
+  defp assign_success(socket, link) do
+    history_item = %{
+      shorty: "#{ShortyWeb.Endpoint.url()}/#{link.slug}",
+      url: link.url
+    }
+
+    socket
+    |> assign(:history, [history_item | socket.assigns[:history]])
+    |> assign_validation_message("")
   end
 
   defp assign_validation_message(socket, message) when is_binary(message) do
@@ -52,5 +64,6 @@ defmodule ShortyWeb.ShortenerLive do
 
   defp validation_message(:invalid_scheme), do: "Your URL must use http or https"
   defp validation_message(:invalid_domain), do: "Your URL must use a qualified domain"
-  defp validation_message(_), do: "Your URL is invalid"
+  defp validation_message(:invalid), do: "Your URL is invalid"
+  defp validation_message(_), do: "Oops... Please try again later"
 end
