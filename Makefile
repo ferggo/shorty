@@ -9,7 +9,6 @@
 setup:
 	docker-compose build
 	docker-compose run mix ecto.setup
-	docker-compose run -e MIX_ENV=test mix ecto.setup
 
 # `make server` will be used after `make setup` in order to start
 # an http server process that listens on any unreserved port
