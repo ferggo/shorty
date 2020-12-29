@@ -8,6 +8,8 @@
 # for the first time
 setup:
 	docker-compose build
+	docker-compose up -d postgres
+	sleep 2
 	docker-compose run mix ecto.setup
 
 # `make server` will be used after `make setup` in order to start

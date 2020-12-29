@@ -15,11 +15,11 @@ ADD config ./config/
 RUN mix deps.get
 RUN mix deps.compile
 
-ADD assets ./assets/
+COPY . .
+
 RUN npm --prefix ./assets install
 RUN mix assets.compile
 
-COPY . .
 RUN mix release
 
 # Release Container
