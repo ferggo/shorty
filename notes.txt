@@ -1,0 +1,56 @@
+# Running this Application
+
+To make things convenient, there is a `Makefile` included. To get started after
+cloning the repo, run `make setup`. This assumes you already have Docker and
+Docker-Compose installed.
+
+After that's done, you can run the server container using `make server`, and it
+will be listening on http://localhost:4000 by default.
+
+The tests can be run via `make test`.
+
+Normally, I wouldn't do this for local development because it's very slow to
+iterate and frustrating to troubleshoot issues that come up. The reason I set
+it up this way is to demonstrate how that would work for a more production-like
+deployment.
+
+For local development, I'd actually recommend that you install `asdf` so that you can do something like:
+
+```
+asdf install # This will install appropriate versions based on the .tool-versions file
+mix deps.get
+iex -S mix phx.server
+```
+
+This will similarly run the server outside of Docker on port 4000, but you'll need to have Postgres running locally.
+You can do that quite easily using the included `docker-compose.yml`:
+
+```
+docker-compose up -d postgres
+```
+
+To run the tests outside of Docker, it's simply:
+
+```
+mix test
+```
+
+# Design notes
+
+I wanted to demonstrate how to set up the entire stack, including:
+
+* Deployment with Docker
+* Phoenix back-end
+* Ecto for database persistence
+* JavaScript front-end (I used LiveView for this)
+* CSS via TailwindCSS
+* Unit / Controller testing via ExUnit
+* End-to-End testing via Wallaby (timed out trying to troubleshoot this)
+
+I feel like I accomplished those goals well. If I had more time to spend on the
+project, I would have spent some more time on structured logging, distributed
+tracing, and better metrics-collection. I spent a lot of time fighting with
+Docker and dusting off front-end JS / CSS skills that I haven't used in a long
+time, as well as learning how to use LiveView. I also hit some issues getting
+ChromeDriver to work reliably via Wallaby, but I decided to just stop trying to
+solve that because I had already invested a lot of time in this exercise.
