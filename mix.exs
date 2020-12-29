@@ -48,7 +48,8 @@ defmodule Shorty.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
-      {:vapor, "~> 0.10.0"}
+      {:vapor, "~> 0.10.0"},
+      {:wallaby, "~> 0.28.0", runtime: false, only: :test}
     ]
   end
 
