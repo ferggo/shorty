@@ -18,6 +18,8 @@ defmodule ShortyWeb.Router do
     pipe_through :browser
 
     live "/", ShortenerLive, :index
+
+    get "/:slug", RedirectController, :show
   end
 
   # Other scopes may use custom stacks.
